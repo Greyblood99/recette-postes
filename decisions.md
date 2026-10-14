@@ -1,0 +1,1 @@
+les statuts d’un contrôle s’appellent Conforme / Non conforme / Indéterminé

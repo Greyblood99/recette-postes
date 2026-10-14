@@ -4,7 +4,7 @@ from powershell import executer_powershell
 from configuration import lire_configuration
 from profil import lire_profil
 from sondes import obtenir_ram, obtenir_disque, obtenir_nom_pc
-
+from comparaison import verifier_min, verifier_nom_pc
 
 
 profils, pv = lire_configuration()
@@ -27,24 +27,24 @@ print(nom_pc)
 ram_pc = obtenir_ram()
 disque_pc = obtenir_disque()
 
-def verifier_ram(ram_pc, ram_min):
-    if ram_pc>= ram_min:
-        return "Conforme"
-    else:
-        return "Non conforme"
+# def verifier_ram(ram_pc, ram_min):
+#     if ram_pc>= ram_min:
+#         return "Conforme"
+#     else:
+#         return "Écart"
 
-def verifier_disque(disque_pc, disque_min):
-    if disque_pc >= disque_min:
-        return "Conforme"
-    else:
-        return "Non conforme"
+# def verifier_disque(disque_pc, disque_min):
+#     if disque_pc >= disque_min:
+#         return "Conforme"
+#     else:
+#         return "Écart"
 
 
-def verifier_nom_pc(nom_obtenu, nom_attendu):
-    if nom_obtenu == nom_attendu:
-        return "Conforme"
-    else:
-        return "Non conforme"
+# def verifier_nom_pc(nom_obtenu, nom_attendu):
+#     if nom_obtenu == nom_attendu:
+#         return "Conforme"
+#     else:
+#         return "Écart"
 
 
 
@@ -61,12 +61,12 @@ print(f"Disque minimum : {profil['disque_min']} Go")
 #     print("Non conforme")
 
 
-verdict_ram = verifier_ram(
+verdict_ram = verifier_min(
     ram_pc,
     profil["memoire_min"]
 )
 print(f"mémoire ram : {verdict_ram}")
-verdict_disque = verifier_disque(
+verdict_disque = verifier_min(
     disque_pc, profil["disque_min"]
 )
 print(f"mémoire disque : {verdict_disque}")
