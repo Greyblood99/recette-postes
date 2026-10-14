@@ -80,20 +80,23 @@ resultat_ram = {
     "controle": "RAM",
     "attendu": profil["memoire_min"],
     "obtenu": ram_pc,
-    "verdict": verdict_ram
+    "verdict": verdict_ram,
+    "gravité": "majeur"
 }
 resultat_disque = {
     "controle": "Disque",
     "attendu": profil["disque_min"],
     "obtenu": disque_pc,
-    "verdict": verdict_disque
+    "verdict": verdict_disque,
+    "gravité": "majeur"
 }
 
 resultat_nom_pc = {
     "controle": "Nom du poste",
     "attendu": profil["nom_pc"],
     "obtenu": nom_pc,
-    "verdict": verdict_nom_pc
+    "verdict": verdict_nom_pc,
+    "gravité": "majeur"
 }
 
 print(resultat_ram)
