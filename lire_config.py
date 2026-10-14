@@ -3,6 +3,7 @@ from pathlib import Path
 from powershell import executer_powershell
 from configuration import lire_configuration
 from profil import lire_profil
+from sondes import obtenir_ram, obtenir_disque, obtenir_nom_pc
 
 
 
@@ -16,27 +17,12 @@ profil = lire_profil()
 print(profil["nom"])
 
 
-
-nom_pc = executer_powershell("hostname")
+nom_pc = obtenir_nom_pc()
+# nom_pc = executer_powershell("hostname")
 
 print(nom_pc)
 
-def obtenir_ram():
-    ram = executer_powershell(
-            "(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory")
-    return round(int(ram) / (1024 ** 3))
-    # ram_pc = executer_powershell(
-    #     "(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory")
-    # ram_pc = round(int(ram_pc) / (1024 ** 3))
-    # print(ram_pc)
 
-# ram_pc = 16
-
-def obtenir_disque():
-    disque = executer_powershell(
-        "(Get-PSDrive C).Free"
-    )
-    return round(int(disque)/(1024**3))
 
 ram_pc = obtenir_ram()
 disque_pc = obtenir_disque()
