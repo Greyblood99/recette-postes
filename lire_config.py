@@ -7,6 +7,7 @@ from sondes import obtenir_ram, obtenir_disque, obtenir_nom_pc
 from comparaison import verifier_min, verifier_nom_pc
 
 
+
 profils, pv = lire_configuration()
 
 print(f"Profils : {profils}")
@@ -19,7 +20,6 @@ print(profil["nom"])
 
 nom_pc = obtenir_nom_pc()
 # nom_pc = executer_powershell("hostname")
-
 print(nom_pc)
 
 

@@ -1,14 +1,13 @@
 import subprocess
 
 def executer_powershell(commande):
-    resultat = subprocess.run(
-    ["powershell", "-Command", commande],
-    capture_output=True,
-    text=True
-    )
-
+    try:
+        resultat = subprocess.run(
+        ["powershell", "-Command", commande],
+        capture_output=True,
+        text=True,
+        timeout= 5
+        )
+    except subprocess.TimeoutExpired:
+        return None
     return resultat.stdout.strip()
-
-nom_pc = executer_powershell("hostname")
-
-print(nom_pc)

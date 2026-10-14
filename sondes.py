@@ -5,7 +5,7 @@ def obtenir_ram():
         ram = executer_powershell(
             "(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory")
         return round(int(ram) / (1024 ** 3))
-    except ValueError:
+    except (ValueError, TypeError):
         return None
     # ram_pc = executer_powershell(
     #     "(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory")
@@ -19,7 +19,7 @@ def obtenir_disque():
         disque = executer_powershell(
         "(Get-PSDrive C).Free")
         return round(int(disque)/(1024**3))
-    except ValueError:
+    except (ValueError, TypeError):
         return None
 
 def obtenir_nom_pc():
