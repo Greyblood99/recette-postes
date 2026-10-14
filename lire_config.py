@@ -1,15 +1,8 @@
-import configparser
 import json
 from powershell import executer_powershell
+from configuration import lire_configuration
 
-def lire_configuration():
-    lecteur = configparser.ConfigParser()
-    lecteur.read("config.ini")
 
-    profils = lecteur.get("projet", "profils")
-    pv = lecteur.get("projet", "pv")
-
-    return profils, pv
 
 profils, pv = lire_configuration()
 
