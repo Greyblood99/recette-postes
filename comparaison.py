@@ -17,3 +17,16 @@ def verifier_nom_pc(nom_obtenu, nom_attendu):
         return "Conforme"
     
     return "Écart"
+
+
+
+def calculer_verdict(resultats):
+
+    presence_indetermine = False
+    presence_ecart_majeur = False
+    presence_ecart_mineur = False
+
+    for resultat in resultats:
+        if resultat["verdict"] == "indéterminé":
+            presence_indetermine = True
+    
