@@ -1,6 +1,6 @@
 import configparser
 import json
-import subprocess
+from powershell import executer_powershell
 
 def lire_configuration():
     lecteur = configparser.ConfigParser()
@@ -23,14 +23,7 @@ def lire_profil():
 profil = lire_profil()
 print(profil["nom"])
 
-def executer_powershell(commande):
-    resultat = subprocess.run(
-    ["powershell", "-Command", commande],
-    capture_output=True,
-    text=True
-    )
 
-    return resultat.stdout.strip()
 
 nom_pc = executer_powershell("hostname")
 
