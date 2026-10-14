@@ -42,3 +42,11 @@ def calculer_verdict(resultats):
     if presence_indetermine:
         return "Non conforme - contrôle non vérifié"
     
+    if presence_ecart_majeur:
+        return "Non conforme"
+
+    
+    if presence_ecart_mineur:
+        return "Conforme avec réserves"
+
+    return "Conforme"

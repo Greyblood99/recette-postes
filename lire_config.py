@@ -4,7 +4,7 @@ from powershell import executer_powershell
 from configuration import lire_configuration
 from profil import lire_profil
 from sondes import obtenir_ram, obtenir_disque, obtenir_nom_pc
-from comparaison import verifier_min, verifier_nom_pc
+from comparaison import verifier_min, verifier_nom_pc, calculer_verdict
 
 
 
@@ -111,7 +111,7 @@ resultats.append(resultat_disque)
 resultats.append(resultat_nom_pc)
 
 
-
+verdict_global = calculer_verdict(resultats)
 
 print("\n- Résultats des contrôles -")
 
@@ -127,3 +127,4 @@ for resultat in resultats:
         )
 print(f"\nContrôles conformes : {nb_conformes}/{len(resultats)}")
 
+print(f"\nVerdict global : {verdict_global}")
