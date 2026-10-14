@@ -1,7 +1,7 @@
 import json
 from powershell import executer_powershell
 from configuration import lire_configuration
-
+from pathlib import Path
 
 
 profils, pv = lire_configuration()
@@ -10,7 +10,9 @@ print(f"Profils : {profils}")
 print(f"PV : {pv}")
 
 def lire_profil():
-    fichier = open("profil_test.json")
+    projet = Path(__file__).parent
+    chemin_profil = projet/"profil_test.json"
+    fichier = open(chemin_profil)
     profil= json.load(fichier)
     return profil
 profil = lire_profil()
