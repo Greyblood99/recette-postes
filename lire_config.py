@@ -129,6 +129,8 @@ resultat_windows = {
 
 print(resultat_ram)
 print(resultat_disque)
+print(resultat_nom_pc)
+print(resultat_windows)
 # resultat = executer_powershell("Get-Date")
 
 # print(resultat)
