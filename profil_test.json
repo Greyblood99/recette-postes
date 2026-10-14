@@ -1,6 +1,7 @@
 {
-"nom": "Windows11",
-"memoire_min": 8,
-"disque_min": 100,
-"nom_pc": "jrem"
+    "nom": "Windows11",
+    "memoire_min": 8,
+    "disque_min": 100,
+    "nom_pc": "jrem",
+    "version_windows": "Windows 11"
 }

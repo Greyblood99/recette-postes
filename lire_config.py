@@ -3,8 +3,8 @@ from pathlib import Path
 from powershell import executer_powershell
 from configuration import lire_configuration
 from profil import lire_profil
-from sondes import obtenir_ram, obtenir_disque, obtenir_nom_pc
-from comparaison import verifier_min, verifier_nom_pc, calculer_verdict
+from sondes import obtenir_ram, obtenir_disque, obtenir_nom_pc, obtenir_version_windows
+from comparaison import verifier_min, verifier_egalite, calculer_verdict
 
 
 
@@ -26,6 +26,10 @@ print(nom_pc)
 
 ram_pc = obtenir_ram()
 disque_pc = obtenir_disque()
+
+version_windows = obtenir_version_windows()
+
+print(version_windows)
 
 # def verifier_ram(ram_pc, ram_min):
 #     if ram_pc>= ram_min:
@@ -71,10 +75,26 @@ verdict_disque = verifier_min(
 )
 print(f"mémoire disque : {verdict_disque}")
 
-verdict_nom_pc = verifier_nom_pc(
+verdict_nom_pc = verifier_egalite(
     nom_pc,
     profil["nom_pc"]
 )
+
+verdict_windows = verifier_egalite(
+    version_windows,
+    profil["version_windows"]
+)
+
+# verdict_domaine = verifier_egalite(
+#     domaine_pc,
+#     profil["domaine"]
+# )
+
+
+
+
+
+
 
 resultat_ram = {
     "controle": "RAM",
@@ -99,6 +119,14 @@ resultat_nom_pc = {
     "gravite": "majeur"
 }
 
+resultat_windows = {
+    "controle": "version Windows",
+    "attendu": profil["version_windows"],
+    "obtenu": version_windows,
+    "verdict": verdict_windows,
+    "gravite": "bloquant"
+}
+
 print(resultat_ram)
 print(resultat_disque)
 # resultat = executer_powershell("Get-Date")
@@ -109,9 +137,10 @@ resultats = []
 resultats.append(resultat_ram)
 resultats.append(resultat_disque)
 resultats.append(resultat_nom_pc)
+resultats.append(resultat_windows)
 
 
-verdict_global = calculer_verdict(resultats)
+
 
 print("\n- Résultats des contrôles -")
 
@@ -125,6 +154,8 @@ for resultat in resultats:
         f"Obtenu : {resultat['obtenu']} | "
         f"Verdict : {resultat['verdict']}"
         )
+
+verdict_global = calculer_verdict(resultats)
 print(f"\nContrôles conformes : {nb_conformes}/{len(resultats)}")
 
 print(f"\nVerdict global : {verdict_global}")

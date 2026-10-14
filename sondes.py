@@ -24,4 +24,12 @@ def obtenir_disque():
 
 def obtenir_nom_pc():
     return executer_powershell("hostname")
+
+
+def obtenir_version_windows():
+    version = executer_powershell(
+        "(Get-ComputerInfo).WindowsProductName"
+    )
+
+    return version
     
