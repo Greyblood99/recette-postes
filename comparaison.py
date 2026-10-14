@@ -27,6 +27,18 @@ def calculer_verdict(resultats):
     presence_ecart_mineur = False
 
     for resultat in resultats:
+        
         if resultat["verdict"] == "indéterminé":
             presence_indetermine = True
+
+        elif resultat["verdict"] == "Écart":
+
+            if resultat["gravite"] == "mineur":
+                presence_ecart_mineur = True
+
+            elif resultat["gravite"] in ["majeur","bloquant"]:
+                presence_ecart_majeur = True
+
+    if presence_indetermine:
+        return "Non conforme - contrôle non vérifié"
     
