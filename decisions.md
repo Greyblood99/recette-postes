@@ -1,1 +1,1 @@
-les statuts d’un contrôle s’appellent Conforme / Non conforme / Indéterminé
+Les 3 statuts d’un contrôle sont Conforme / Écart / Indéterminé, comme dans le sujet
