@@ -3,8 +3,8 @@ from pathlib import Path
 from powershell import executer_powershell
 from configuration import lire_configuration
 from profil import lire_profil
-from sondes import obtenir_ram, obtenir_disque, obtenir_nom_pc, obtenir_version_windows
-from comparaison import verifier_min, verifier_egalite, calculer_verdict
+from sondes import obtenir_ram, obtenir_disque, obtenir_nom_pc, obtenir_version_windows, obtenir_pare_feu
+from comparaison import verifier_min, verifier_egalite, verifier_pare_feu, calculer_verdict
 
 
 
@@ -26,10 +26,12 @@ print(nom_pc)
 
 ram_pc = obtenir_ram()
 disque_pc = obtenir_disque()
-
 version_windows = obtenir_version_windows()
+pare_feu = obtenir_pare_feu()
 
 print(version_windows)
+print(type(version_windows))
+print(pare_feu)
 
 # def verifier_ram(ram_pc, ram_min):
 #     if ram_pc>= ram_min:
@@ -85,6 +87,7 @@ verdict_windows = verifier_egalite(
     profil["version_windows"]
 )
 
+verdict_pare_feu = verifier_pare_feu(pare_feu)
 # verdict_domaine = verifier_egalite(
 #     domaine_pc,
 #     profil["domaine"]
@@ -127,10 +130,18 @@ resultat_windows = {
     "gravite": "bloquant"
 }
 
+resultat_pare_feu = {
+    "controle": "Pare-feu",
+    "attendu": "3 profils actifs",
+    "obtenu": pare_feu,
+    "verdict": verdict_pare_feu,
+    "gravite": "bloquant"
+}
 print(resultat_ram)
 print(resultat_disque)
 print(resultat_nom_pc)
 print(resultat_windows)
+print(resultat_pare_feu)
 # resultat = executer_powershell("Get-Date")
 
 # print(resultat)
@@ -140,6 +151,7 @@ resultats.append(resultat_ram)
 resultats.append(resultat_disque)
 resultats.append(resultat_nom_pc)
 resultats.append(resultat_windows)
+resultats.append(resultat_pare_feu)
 
 
 

@@ -32,4 +32,9 @@ def obtenir_version_windows():
     )
 
     return version
+
+def obtenir_pare_feu():
+    return executer_powershell(
+        "(Get-NetFirewallProfile -Profile Domain,Public,Private).Enabled"
+    )
     

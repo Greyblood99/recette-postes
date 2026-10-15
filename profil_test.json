@@ -3,5 +3,7 @@
     "memoire_min": 8,
     "disque_min": 100,
     "nom_pc": "jrem",
-    "version_windows": "Windows 11"
+    "version_windows": "Windows 11",
+    "pare_feu_actif": true
 }
+

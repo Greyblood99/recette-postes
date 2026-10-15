@@ -19,7 +19,17 @@ def verifier_egalite(valeur_obtenue, valeur_attendue):
     
     return "Écart"
 
+def verifier_pare_feu(valeur):
 
+    if valeur is None:
+        return "Indéterminé"
+
+    lignes = valeur.splitlines()
+
+    if lignes == ["True", "True", "True"]:
+        return "Conforme"
+
+    return "Écart"
 
 
 
