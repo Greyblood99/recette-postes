@@ -41,7 +41,7 @@ def calculer_verdict(resultats):
 
     for resultat in resultats:
         
-        if resultat["verdict"] == "indéterminé":
+        if resultat["verdict"] == "Indéterminé":
             presence_indetermine = True
 
         elif resultat["verdict"] == "Écart":
