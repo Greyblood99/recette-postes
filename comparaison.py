@@ -63,3 +63,13 @@ def calculer_verdict(resultats):
         return "Conforme avec réserves"
 
     return "Conforme"
+
+def creer_resultat(controle, attendu, obtenu, verdict, gravite):
+
+    return {
+        "controle": controle,
+        "attendu": attendu,
+        "obtenu": obtenu,
+        "verdict": verdict,
+        "gravite": gravite
+    }

@@ -1,10 +1,7 @@
-import json
-from pathlib import Path
-from powershell import executer_powershell
 from configuration import lire_configuration
 from profil import lire_profil
 from sondes import obtenir_ram, obtenir_disque, obtenir_nom_pc, obtenir_version_windows, obtenir_pare_feu
-from comparaison import verifier_min, verifier_egalite, verifier_pare_feu, calculer_verdict
+from comparaison import verifier_min, verifier_egalite, verifier_pare_feu, calculer_verdict, creer_resultat
 
 
 
@@ -99,44 +96,46 @@ verdict_pare_feu = verifier_pare_feu(pare_feu)
 
 
 
-resultat_ram = {
-    "controle": "RAM",
-    "attendu": profil["memoire_min"],
-    "obtenu": ram_pc,
-    "verdict": verdict_ram,
-    "gravite": "majeur"
-}
-resultat_disque = {
-    "controle": "Disque",
-    "attendu": profil["disque_min"],
-    "obtenu": disque_pc,
-    "verdict": verdict_disque,
-    "gravite": "majeur"
-}
+resultat_ram = creer_resultat(
+    "RAM",
+    profil["memoire_min"],
+    ram_pc,
+    verdict_ram,
+    "majeur"
+)
 
-resultat_nom_pc = {
-    "controle": "Nom du poste",
-    "attendu": profil["nom_pc"],
-    "obtenu": nom_pc,
-    "verdict": verdict_nom_pc,
-    "gravite": "majeur"
-}
+resultat_disque = creer_resultat(
+    "Disque",
+    profil["disque_min"],
+    disque_pc,
+    verdict_disque,
+    "majeur"
+)
 
-resultat_windows = {
-    "controle": "version Windows",
-    "attendu": profil["version_windows"],
-    "obtenu": version_windows,
-    "verdict": verdict_windows,
-    "gravite": "bloquant"
-}
+resultat_nom_pc = creer_resultat(
+    "Nom du poste",
+    profil["nom_pc"],
+    nom_pc,
+    verdict_nom_pc,
+    "majeur"
+)
 
-resultat_pare_feu = {
-    "controle": "Pare-feu",
-    "attendu": "3 profils actifs",
-    "obtenu": pare_feu,
-    "verdict": verdict_pare_feu,
-    "gravite": "bloquant"
-}
+resultat_windows = creer_resultat(
+    "Version Windows",
+    profil["version_windows"],
+    version_windows,
+    verdict_windows,
+    "bloquant"
+)
+
+
+resultat_pare_feu = creer_resultat(
+    "Pare-feu",
+    "3 profils actifs",
+    pare_feu,
+    verdict_pare_feu,
+    "bloquant"
+)
 print(resultat_ram)
 print(resultat_disque)
 print(resultat_nom_pc)
