@@ -73,3 +73,18 @@ def creer_resultat(controle, attendu, obtenu, verdict, gravite):
         "verdict": verdict,
         "gravite": gravite
     }
+
+def comparer(type_comparaison, obtenu, attendu):
+    if obtenu is None:
+        return "Indéterminé"
+
+    if type_comparaison == "min":
+        conforme = obtenu >= attendu
+    elif type_comparaison == "egal":
+        conforme = ____
+    else:
+        raise ValueError(f"Type de comparaison inconnu : {type_comparaison}")
+
+    if conforme:
+        return "Conforme"
+    return "Écart"

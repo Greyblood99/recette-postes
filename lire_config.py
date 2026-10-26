@@ -1,115 +1,87 @@
 from configuration import lire_configuration
 from profil import lire_profil
-from sondes import obtenir_ram, obtenir_disque, obtenir_nom_pc, obtenir_version_windows, obtenir_pare_feu
-from comparaison import verifier_min, verifier_egalite, verifier_pare_feu, calculer_verdict, creer_resultat
 
+from sondes import (
+    obtenir_ram,
+    obtenir_disque,
+    obtenir_nom_pc,
+    obtenir_version_windows,
+    obtenir_pare_feu
+)
 
+from comparaison import (
+    verifier_min,
+    verifier_egalite,
+    verifier_pare_feu,
+    calculer_verdict,
+    creer_resultat
+)
 
+# Configuration
 profils, pv = lire_configuration()
 
 print(f"Profils : {profils}")
 print(f"PV : {pv}")
 
-
+# Profil
 profil = lire_profil()
+
 print(profil["nom"])
 
-
+# Informations du poste
 nom_pc = obtenir_nom_pc()
-# nom_pc = executer_powershell("hostname")
-print(nom_pc)
-
-
-
-ram_pc = obtenir_ram()
-disque_pc = obtenir_disque()
 version_windows = obtenir_version_windows()
 pare_feu = obtenir_pare_feu()
 
+print(nom_pc)
 print(version_windows)
 print(type(version_windows))
 print(pare_feu)
 
-# def verifier_ram(ram_pc, ram_min):
-#     if ram_pc>= ram_min:
-#         return "Conforme"
-#     else:
-#         return "Écart"
+# Catalogue des contrôles minimums
+catalogue = [
+    {
+        "libelle": "RAM",
+        "gravite": "majeur",
+        "sonde": obtenir_ram,
+        "cle": "memoire_min"
+    },
+    {
+        "libelle": "Disque",
+        "gravite": "majeur",
+        "sonde": obtenir_disque,
+        "cle": "disque_min"
+    }
+]
 
-# def verifier_disque(disque_pc, disque_min):
-#     if disque_pc >= disque_min:
-#         return "Conforme"
-#     else:
-#         return "Écart"
+resultats = []
 
+# Contrôles RAM et Disque
+for controle in catalogue:
 
-# def verifier_nom_pc(nom_obtenu, nom_attendu):
-#     if nom_obtenu == nom_attendu:
-#         return "Conforme"
-#     else:
-#         return "Écart"
+    obtenu = controle["sonde"]()
 
+    attendu = profil[controle["cle"]]
 
+    verdict = verifier_min(
+        obtenu,
+        attendu
+    )
 
-    
-print(f"RAM du PC : {ram_pc} Go")
-print(f"RAM minimale : {profil['memoire_min']} Go")
-print(f"Disque libre du PC : {disque_pc} Go")
-print(f"Disque minimum : {profil['disque_min']} Go")
+    resultat = creer_resultat(
+        controle["libelle"],
+        attendu,
+        obtenu,
+        verdict,
+        controle["gravite"]
+    )
 
+    resultats.append(resultat)
 
-# if ram_pc >= profil["memoire_min"]:
-#     print("Conforme")
-# else:
-#     print("Non conforme")
-
-
-verdict_ram = verifier_min(
-    ram_pc,
-    profil["memoire_min"]
-)
-print(f"mémoire ram : {verdict_ram}")
-verdict_disque = verifier_min(
-    disque_pc, profil["disque_min"]
-)
-print(f"mémoire disque : {verdict_disque}")
-
+# Contrôle nom du poste
 verdict_nom_pc = verifier_egalite(
     nom_pc,
     profil["nom_pc"]
-)
-
-verdict_windows = verifier_egalite(
-    version_windows,
-    profil["version_windows"]
-)
-
-verdict_pare_feu = verifier_pare_feu(pare_feu)
-# verdict_domaine = verifier_egalite(
-#     domaine_pc,
-#     profil["domaine"]
-# )
-
-
-
-
-
-
-
-resultat_ram = creer_resultat(
-    "RAM",
-    profil["memoire_min"],
-    ram_pc,
-    verdict_ram,
-    "majeur"
-)
-
-resultat_disque = creer_resultat(
-    "Disque",
-    profil["disque_min"],
-    disque_pc,
-    verdict_disque,
-    "majeur"
 )
 
 resultat_nom_pc = creer_resultat(
@@ -120,6 +92,14 @@ resultat_nom_pc = creer_resultat(
     "majeur"
 )
 
+resultats.append(resultat_nom_pc)
+
+# Contrôle version Windows
+verdict_windows = verifier_egalite(
+    version_windows,
+    profil["version_windows"]
+)
+
 resultat_windows = creer_resultat(
     "Version Windows",
     profil["version_windows"],
@@ -128,6 +108,12 @@ resultat_windows = creer_resultat(
     "bloquant"
 )
 
+resultats.append(resultat_windows)
+
+# Contrôle pare-feu
+verdict_pare_feu = verifier_pare_feu(
+    pare_feu
+)
 
 resultat_pare_feu = creer_resultat(
     "Pare-feu",
@@ -136,39 +122,34 @@ resultat_pare_feu = creer_resultat(
     verdict_pare_feu,
     "bloquant"
 )
-print(resultat_ram)
-print(resultat_disque)
-print(resultat_nom_pc)
-print(resultat_windows)
-print(resultat_pare_feu)
-# resultat = executer_powershell("Get-Date")
 
-# print(resultat)
-
-resultats = []
-resultats.append(resultat_ram)
-resultats.append(resultat_disque)
-resultats.append(resultat_nom_pc)
-resultats.append(resultat_windows)
 resultats.append(resultat_pare_feu)
 
-
-
-
+# Affichage des résultats
 print("\n- Résultats des contrôles -")
 
 nb_conformes = 0
+
 for resultat in resultats:
-    
+
     if resultat["verdict"] == "Conforme":
         nb_conformes += 1
-    print(f"{resultat['controle']} | "
+
+    print(
+        f"{resultat['controle']} | "
         f"Attendu : {resultat['attendu']} | "
         f"Obtenu : {resultat['obtenu']} | "
         f"Verdict : {resultat['verdict']}"
-        )
+    )
 
-verdict_global = calculer_verdict(resultats)
-print(f"\nContrôles conformes : {nb_conformes}/{len(resultats)}")
+# Verdict global
+verdict_global = calculer_verdict(
+    resultats
+)
+
+print(
+    f"\nContrôles conformes : "
+    f"{nb_conformes}/{len(resultats)}"
+)
 
 print(f"\nVerdict global : {verdict_global}")
