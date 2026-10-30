@@ -1,7 +1,7 @@
 [README.md](https://github.com/user-attachments/files/34184796/README.md)
 # Recette des postes – EXPERTY
 
-Application de bureau (Python + Tkinter) qui vérifie l'état d'un poste Windows fraîchement
+Application de bureau qui vérifie l'état d'un poste Windows fraîchement
 déployé, le compare à un **profil de référence** (fichier JSON), affiche un tableau
 Conforme / Écart / Indéterminé, propose des corrections automatiques et édite un
 **procès-verbal de recette** horodaté au format PDF.
